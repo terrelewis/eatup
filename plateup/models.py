@@ -16,7 +16,7 @@ class Restaurant(models.Model):
     name=models.CharField(max_length=30)
     cuisine=models.CharField(max_length=20)
     rating=models.IntegerField(choices=STARS, default=1)
-    picture = models.ImageField(upload_to='images/', null=True)
+
 
     def __unicode__(self):
         return self.name
