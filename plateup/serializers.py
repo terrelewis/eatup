@@ -4,11 +4,11 @@ from plateup.models import Restaurant,User,STARS
 
 
 class UserSerializer(serializers.ModelSerializer):
-    
+
 
     class Meta:
         model=User
-        fields=('id', 'name','sex')
+        fields=('id', 'name','sex','restaurant')
 
 class RestaurantSerializer(serializers.ModelSerializer):
     users = serializers.StringRelatedField(many=True)
