@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from plateup.models import Restaurant,User,STARS
+from plateup.models import Restaurant,STARS
+from django.contrib.auth.models import User
 
 
 

@@ -1,4 +1,6 @@
 from __future__ import unicode_literals
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save, class_prepared
 
 from django.db import models
 
@@ -22,14 +24,21 @@ class Restaurant(models.Model):
         return self.name
 
 
-class User(models.Model):
-    name=models.CharField(max_length=30)
+class Profile(models.Model):
+    owner=models.ForeignKey('auth.User', related_name='Profile')
     sex=models.CharField(choices=GENDER, default='not defined', max_length=15)
     age=models.IntegerField(blank=True, default=0)
-    restaurant=models.ManyToManyField(Restaurant, related_name='users')
+    restaurant=models.ManyToManyField(Restaurant, related_name='users', blank=True)
 
     def __unicode__(self):
-        return self.name
+        return unicode(self.owner)
+
+def create_user_Info(sender, instance, created, **kwargs):
+    if created:
+        profile, created = Profile.objects.get_or_create(owner=instance)
+
+post_save.connect(create_user_Info, sender=User)
+
 
 
 
